@@ -1,0 +1,7 @@
+.sidebar .sidebar-brand{
+    padding: 0.5rem 1rem;
+}
+.badge-sidebar{
+    transform-origin:0% !important;
+    margin-top: 1px !important;
+}
