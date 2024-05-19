@@ -10,4 +10,8 @@ class PageController extends Controller
     {
         return view("pages.index");
     }
+    public function roomPage()
+    {
+        return view("pages.room");
+    }
 }

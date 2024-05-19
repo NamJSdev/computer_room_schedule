@@ -12,7 +12,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="/">
             <i class="fas fa-fw fa-calendar"></i>
             <span>Thời khóa biểu</span></a>
     </li>
@@ -34,9 +34,8 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Custom Components:</h6>
-                <a class="collapse-item" href="buttons.html">Buttons</a>
-                <a class="collapse-item" href="cards.html">Cards</a>
+                <a class="collapse-item" href="/thoiKhoaBieuDangKy">TKB Đăng Ký</a>
+                {{-- <a class="collapse-item" href="cards.html">Cards</a> --}}
             </div>
         </div>
     </li>
@@ -50,7 +49,7 @@
     </div>
     <!-- Nav Item - Tables -->
     <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="/duyetTKB">
             <i class="fas fa-fw fa-table"></i>
             <span>Duyệt TKB</span>
             <!-- Counter - Alerts -->
@@ -66,8 +65,22 @@
         </a>
         <div id="collapseDesktop" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="login.html">Danh Sách Phòng</a>
+                <a class="collapse-item" href="{{route('phongmay')}}">Danh Sách Phòng</a>
                 {{-- <a class="collapse-item" href="register.html"></a> --}}
+            </div>
+        </div>
+    </li>
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseService"
+            aria-expanded="true" aria-controls="collapsePages">
+            <i class="fas fa-fw fa-tools"></i>
+            <span>Cấu Hình</span>
+        </a>
+        <div id="collapseService" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{route('tiethoc')}}">Tiết Học</a>
+                <a class="collapse-item" href="register.html">Học Kỳ</a>
             </div>
         </div>
     </li>
@@ -85,6 +98,14 @@
             </div>
         </div>
     </li>
+
+    <!-- Nav Item - Tables -->
+    {{-- <li class="nav-item">
+        <a class="nav-link" href="tables.html">
+            <i class="fas fa-fw fa-address-book"></i>
+            <span>Phân Quyền</span>
+        </a>
+    </li> --}}
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

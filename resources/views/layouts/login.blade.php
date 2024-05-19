@@ -24,14 +24,7 @@
 </head>
 
 <body id="page-top">
-    @include('layouts.header')
-
-    <div class="container-fluid">
-        <!-- Main content goes here -->
         @yield('content')
-    </div>
-
-    @include('layouts.footer')
     <!-- Bootstrap core JavaScript-->
     <script src="{{asset('js/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('js/bootstap/bootstrap.bundle.min.js')}}"></script>
