@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'users',
+        'passwords' => 'tai_khoans', // Đổi passwords thành 'tai_khoans'
     ],
 
     /*
@@ -38,7 +38,7 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'tai_khoans', // Đổi provider thành 'tai_khoans'
         ],
     ],
 
@@ -60,15 +60,10 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'tai_khoans' => [ // Thêm provider 'tai_khoans'
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\TaiKhoan::class, // Sử dụng model TaiKhoan
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*
@@ -91,8 +86,8 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
+        'tai_khoans' => [ // Đổi 'users' thành 'tai_khoans'
+            'provider' => 'tai_khoans', // Đổi 'users' thành 'tai_khoans'
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,

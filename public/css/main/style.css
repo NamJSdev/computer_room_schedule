@@ -1,0 +1,15 @@
+.sidebar .sidebar-brand {
+    padding: 0.5rem 1rem;
+}
+.badge-sidebar {
+    transform-origin: 0% !important;
+    margin-top: 1px !important;
+}
+
+#alert {
+    position: fixed;
+    bottom: 0px; /* Điều chỉnh vị trí hiển thị trên cùng */
+    right: 0%; /* Điều chỉnh vị trí ngang */
+    transform: translateX(-50%);
+    z-index: 9999; /* Đảm bảo thông báo hiển thị trên cùng */
+}
