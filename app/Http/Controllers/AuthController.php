@@ -36,7 +36,7 @@ class AuthController extends Controller
             ]);
         }
         
-        if ($request->password != $user->MatKhau) {
+        if (!Hash::check($request->password, $user->MatKhau)) {
             throw ValidationException::withMessages([
                 'password' => 'Mật khẩu không đúng!',
             ]);

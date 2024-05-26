@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class TietHocController extends Controller
 {
-    // Function to display rooms
+    // Function to display tiet hoc
     public function index()
     {
         $items = TietHoc::all(); // Lấy tất cả các phòng
@@ -27,30 +27,34 @@ class TietHocController extends Controller
         return redirect()->route('tiethoc')->with('success', 'Tiết Học đã được thêm thành công.');
     }
 
-    // // Phương thức để cập nhật thông tin phòng máy
-    // public function updateRoom(Request $request)
-    // {
-    //     $request->validate([
-    //         'id' => 'required|integer',
-    //         'TenPhong' => 'required|string|max:255',
-    //     ]);
+    // Phương thức để cập nhật thông tin tiết học
+    public function updateTiet(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|integer',
+            'ten' => 'required|string|max:255',
+            'thoi_gian_bat_dau' => 'required',
+            'thoi_gian_ket_thuc' => 'required'
+        ]);
 
-    //     $room = PhongMay::find($request->id);
-    //     $room->TenPhong = $request->TenPhong;
-    //     $room->save();
+        $item = TietHoc::find($request->id);
+        $item->Ten = $request->ten;
+        $item->ThoiGianBatDau = date('Y-m-d H:i:s', strtotime($request->thoi_gian_bat_dau));
+        $item->ThoiGianKetThuc = date('Y-m-d H:i:s', strtotime($request->thoi_gian_ket_thuc));
+        $item->save();
 
-    //     return redirect()->route('phongmay')->with('success', 'Phòng máy đã được cập nhật thành công.');
-    // }
+        return redirect()->route('tiethoc')->with('success', 'Tiết học đã được cập nhật thành công.');
+    }
 
-    // // Phương thức để xóa phòng máy
-    // public function deleteRoom(Request $request)
-    // {
-    //     $request->validate([
-    //         'id' => 'required|integer',
-    //     ]);
+    // Phương thức để xóa tiết học
+    public function deleteTiet(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|integer',
+        ]);
 
-    //     PhongMay::destroy($request->id);
+        TietHoc::destroy($request->id);
 
-    //     return redirect()->route('phongmay')->with('success', 'Phòng máy đã được xóa thành công.');
-    // }
+        return redirect()->route('tiethoc')->with('success', 'Tiết học đã được xóa thành công.');
+    }
 }

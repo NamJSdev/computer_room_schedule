@@ -49,7 +49,6 @@
     var data = JSON.stringify({ id: id });
     xhr.send(data);
 });
-
 </script>
 
 @section('title', 'Phòng Máy')

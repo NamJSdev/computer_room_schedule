@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Home')
+@section('title', 'Thời Khóa Biểu Phòng Máy')
 
 @section('content')
 {{-- Calendar --}}
