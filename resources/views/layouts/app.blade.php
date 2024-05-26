@@ -46,6 +46,7 @@
     <!-- Custom scripts for all pages-->
     <script src="{{asset('js/main/sb-admin-2.min.js')}}"></script>
     <script src="{{asset('js/main/main.js')}}"></script>  
+    <script src="{{asset('js/scrape.js')}}"></script>
 </body>
 
 </html>

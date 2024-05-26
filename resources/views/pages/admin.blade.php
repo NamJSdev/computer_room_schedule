@@ -9,17 +9,11 @@
             var button = $(event.relatedTarget);
             var id = button.data('id');
             var name = button.data('name');
-            var thoiGianBatDau = button.data('thoi-gian-bat-dau'); 
-            var thoiGianKetThuc = button.data('thoi-gian-ket-thuc');
-
-            thoiGianBatDau = formatTime(thoiGianBatDau);
-            thoiGianKetThuc = formatTime(thoiGianKetThuc);
-
+            var email = button.data('email');
             var modal = $(this);
             modal.find('input[name="id"]').val(id);
-            modal.find('input[name="ten"]').val(name);
-            modal.find('input[name="thoi_gian_bat_dau"]').val(thoiGianBatDau);
-            modal.find('input[name="thoi_gian_ket_thuc"]').val(thoiGianKetThuc);
+            modal.find('input[name="user_name"]').val(name);
+            modal.find('input[name="email"]').val(email);
         });
 
         // Populate delete modal with id
@@ -32,13 +26,6 @@
         // Handle form submit for delete
     
     });
-    // Function to format time to HH:MM
-    function formatTime(timeString) {
-        var date = new Date(timeString);
-        var hours = date.getHours().toString().padStart(2, '0');
-        var minutes = date.getMinutes().toString().padStart(2, '0');
-        return `${hours}:${minutes}`;
-    }
     document.getElementById('deleteForm').addEventListener('submit', function(e) {
     e.preventDefault();
     var id = document.getElementById('delete-id').value;
@@ -64,10 +51,9 @@
     var data = JSON.stringify({ id: id });
     xhr.send(data);
 });
-
 </script>
 
-@section('title', 'Tiết Học')
+@section('title', 'Tài Khoản Giảng Viên')
 <style>
     .table-wrapper {
         width: 100%;
@@ -155,9 +141,9 @@
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-8"><h2>Danh Sách Tiết Học</h2></div>
+                    <div class="col-sm-8"><h2>Quản Lý Tài Khoản Hệ Thống</h2></div>
                     <div class="col-sm-4">
-                        <button type="button" class="btn btn-info add-new" data-toggle="modal" data-target="#addModal"><i class="fa fa-plus"></i> Thêm Mới</button>
+                        <button type="button" class="btn btn-info add-new" data-toggle="modal" data-target="#addModal"><i class="fa fa-plus"></i> Tạo Tài Khoản</button>
                     </div>
                 </div>
             </div>
@@ -165,25 +151,22 @@
                 <thead>
                     <tr>
                         <th>STT</th>
-                        <th>Tiết</th>
-                        <th>Thời Gian Bắt Đầu</th>
-                        <th>Thời gian Kết Thúc</th>
+                        <th>Email</th>
+                        <th>Tên Người Dùng</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($items as $item)
-                    <tr data-id="{{ $item->id }}">
+                    @foreach($datas as $data)
+                    <tr data-id="{{ $data->id }}">
                         <td>{{ $loop->index + 1 }}</td>
-                        <td>{{ $item->Ten }}</td>
-                        <td>{{ substr($item->ThoiGianBatDau, 11, 5) }}</td>
-                        <td>{{ substr($item->ThoiGianKetThuc, 11, 5) }}</td>
+                        <td>{{ $data->Email }}</td>
+                        <td>{{ $data->TenNguoiDung }}</td>
                         <td>
-                            <a href="#" class="edit" title="Edit" data-toggle="modal" data-target="#editModal" data-id="{{ $item->id }}" 
-                                data-name="{{ $item->Ten }}"   
-                                data-thoi-gian-bat-dau="{{ $item->ThoiGianBatDau }}" 
-                                data-thoi-gian-ket-thuc="{{ $item->ThoiGianKetThuc }}"><i class="fas fa-fw fa-pen"></i></a>
-                            <a href="#" class="delete" title="Delete" data-toggle="modal" data-target="#deleteModal" data-id="{{ $item->id }}"><i class="fas fa-fw fa-trash"></i></a>
+                            <a href="#" class="edit" title="Edit" data-toggle="modal" data-target="#editModal" data-id="{{ $data->id }}" data-name="{{ $data->TenNguoiDung }}"
+                                data-email="{{ $data->Email }}"    
+                            ><i class="fas fa-fw fa-pen"></i></a>
+                            <a href="#" class="delete" title="Delete" data-toggle="modal" data-target="#deleteModal" data-id="{{ $data->id }}"><i class="fas fa-fw fa-trash"></i></a>
                         </td>
                     </tr>
                     @endforeach
@@ -197,24 +180,24 @@
 <div id="addModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="addForm" action="{{ route('add-tiet') }}" method="POST">
+            <form id="addForm" action="{{ route('create-account-gv') }}" method="POST">
                 @csrf
                 <div class="modal-header">						
-                    <h4 class="modal-title">Thêm Tiết Học</h4>
+                    <h4 class="modal-title">Tạo Tài Khoản</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">					
                     <div class="form-group">
-                        <label>Tiết Học</label>
-                        <input type="text" class="form-control" name="ten" required>
+                        <label>Email</label>
+                        <input type="text" class="form-control" name="email" required>
                     </div>				
                     <div class="form-group">
-                        <label>Thời Gian Bắt Đầu</label>
-                        <input type="time" class="form-control" name="thoi_gian_bat_dau" required>
+                        <label>Tên Người Dùng</label>
+                        <input type="text" class="form-control" name="user_name" required>
                     </div>				
                     <div class="form-group">
-                        <label>Thời Gian Kết Thúc</label>
-                        <input type="time" class="form-control" name="thoi_gian_ket_thuc" required>
+                        <label>Mật Khẩu</label>
+                        <input type="text" class="form-control" name="password" required>
                     </div>				
                 </div>
                 <div class="modal-footer">
@@ -230,25 +213,25 @@
 <div id="editModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="editForm" action="{{ route('update-tiet') }}" method="POST">
+            <form id="editForm" action="{{ route('update-account-admin') }}" method="POST">
                 @csrf
                 <div class="modal-header">						
-                    <h4 class="modal-title">Chỉnh Sửa Tiết Học</h4>
+                    <h4 class="modal-title">Chỉnh Sửa Tài Khoản</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">					
                     <div class="form-group">
-                        <label>Tên Tiết</label>
+                        <label>Email</label>
                         <input type="hidden" name="id">
-                        <input type="text" class="form-control" name="ten" required>
-                        <div class="form-group">
-                            <label>Thời Gian Bắt Đầu</label>
-                            <input type="time" class="form-control" name="thoi_gian_bat_dau" required>
-                        </div>				
-                        <div class="form-group">
-                            <label>Thời Gian Kết Thúc</label>
-                            <input type="time" class="form-control" name="thoi_gian_ket_thuc" required>
-                        </div>			
+                        <input type="text" class="form-control" name="email" required>
+                    </div>				
+                    <div class="form-group">
+                        <label>Tên Người Dùng</label>
+                        <input type="text" class="form-control" name="user_name" required>
+                    </div>				
+                    <div class="form-group">
+                        <label>Mật Khẩu Mới</label>
+                        <input type="text" class="form-control" name="password">
                     </div>				
                 </div>
                 <div class="modal-footer">
@@ -264,14 +247,14 @@
 <div id="deleteModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="deleteForm" action="{{ route('delete-tiet') }}" method="POST">
+            <form id="deleteForm" action="{{ route('delete-account-admin') }}" method="POST">
                 @csrf
                 <div class="modal-header">
-                    <h4 class="modal-title">Xóa Tiết Học</h4>
+                    <h4 class="modal-title">Xóa Tài Khoản</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <p>Bạn có chắc chắn muốn xóa tiết học này?</p>
+                    <p>Bạn có chắc chắn muốn xóa tài khoản này?</p>
                     <input type="hidden" name="id" id="delete-id">
                 </div>
                 <div class="modal-footer">
@@ -283,4 +266,3 @@
     </div>
 </div>
 @endsection
-

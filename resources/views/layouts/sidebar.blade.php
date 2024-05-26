@@ -2,7 +2,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('thoikhoabieu')}}">
         <img class="h-100" src="{{asset('imgs/logo/logo.png')}}" alt="logo">
         {{-- <div class="sidebar-brand-text mx-3">Shedule<sup></sup></div> --}}
     </a>
@@ -12,14 +12,17 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="/">
+        <a class="nav-link" href="{{route('thoikhoabieu')}}">
             <i class="fas fa-fw fa-calendar"></i>
             <span>Thời khóa biểu</span></a>
     </li>
 
+    @guest
+    @else
     <!-- Divider -->
     <hr class="sidebar-divider">
-
+    
+    @if(Auth::user()->VaiTroID == 2) <!-- Giảng viên -->
     <!-- Heading -->
     <div class="sidebar-heading">
         Giảng Viên
@@ -42,11 +45,14 @@
 
     <!-- Divider -->
     <hr class="sidebar-divider">
-
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Quản trị viên
-    </div>
+     <!-- Checking User Role -->
+     @endif
+     
+     @if(Auth::user()->VaiTroID == 1) <!-- Admin -->
+     <!-- Heading -->
+     <div class="sidebar-heading">
+         Quản trị viên
+     </div>
     <!-- Nav Item - Tables -->
     <li class="nav-item">
         <a class="nav-link" href="/duyetTKB">
@@ -80,7 +86,7 @@
         <div id="collapseService" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{route('tiethoc')}}">Tiết Học</a>
-                <a class="collapse-item" href="register.html">Học Kỳ</a>
+                <a class="collapse-item" href="{{route('hocky')}}">Học Kỳ</a>
             </div>
         </div>
     </li>
@@ -93,22 +99,17 @@
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="login.html">Tài Khoản Giảng Viên</a>
-                <a class="collapse-item" href="register.html">Tài Khoản Hệ Thống</a>
+                <a class="collapse-item" href="{{route('taikhoangiangvien')}}">Tài Khoản Giảng Viên</a>
+                <a class="collapse-item" href="{{route('taikhoanhethong')}}">Tài Khoản Hệ Thống</a>
             </div>
         </div>
     </li>
 
-    <!-- Nav Item - Tables -->
-    {{-- <li class="nav-item">
-        <a class="nav-link" href="tables.html">
-            <i class="fas fa-fw fa-address-book"></i>
-            <span>Phân Quyền</span>
-        </a>
-    </li> --}}
-
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
+    @endif
+
+    @endguest
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">

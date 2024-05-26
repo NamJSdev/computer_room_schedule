@@ -2,8 +2,37 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/main/core.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('js/fullcalendar/fullcalendar.css')}}" />
 
+<div class="card mb-3" style="width: 100%; border-radius: 5px">
+    <div class="card-body">
+        <form id="filter-form">
+            <div class="form-row">
+                <div class="col">
+                    <select id="hoc-ky" class="form-control">
+                        @foreach($hocKys as $hocKy)
+                            <option value="{{ $hocKy->id }}">{{ $hocKy->TenHK }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col">
+                    <select id="phong-may" class="form-control">
+                        @foreach($phongMays as $phongMay)
+                            <option value="{{ $phongMay->id }}">{{ $phongMay->TenPhong }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary">Lọc</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 <div class="pd-20 card-box mb-30">
     <div class="calendar-wrap">
+        {{-- <div class="d-flex flex-column align-items-center">
+            <p class="h3">Phòng CNTT-ND204</p>
+            <p class="h3">Học Kỳ 2</p>
+        </div> --}}
         <div id="calendar"></div>
     </div>
     @if(Session::has('success'))
@@ -75,42 +104,6 @@
                             <label>Giảng Viên</label>
                             <input type="text" class="form-control" name="ename" />
                         </div>
-                        {{-- <div class="form-group">
-                            <label>Event Date</label>
-                            <input
-                                type="text"
-                                class="datetimepicker form-control"
-                                name="edate"
-                            />
-                        </div>
-                        <div class="form-group">
-                            <label>Event Description</label>
-                            <textarea class="form-control" name="edesc"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Event Color</label>
-                            <select class="form-control" name="ecolor">
-                                <option value="fc-bg-default">fc-bg-default</option>
-                                <option value="fc-bg-blue">fc-bg-blue</option>
-                                <option value="fc-bg-lightgreen">
-                                    fc-bg-lightgreen
-                                </option>
-                                <option value="fc-bg-pinkred">fc-bg-pinkred</option>
-                                <option value="fc-bg-deepskyblue">
-                                    fc-bg-deepskyblue
-                                </option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Event Icon</label>
-                            <select class="form-control" name="eicon">
-                                <option value="circle">circle</option>
-                                <option value="cog">cog</option>
-                                <option value="group">group</option>
-                                <option value="suitcase">suitcase</option>
-                                <option value="calendar">calendar</option>
-                            </select>
-                        </div> --}}
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">

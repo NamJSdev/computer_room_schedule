@@ -27,17 +27,6 @@ jQuery(document).ready(function () {
 			minTime: '06:00:00', // Bắt đầu từ 6 giờ sáng
 			maxTime: '21:00:00', // Kết thúc vào 8 giờ tối
 			selectable: true, // Cho phép chọn vùng để tạo sự kiện
-			// Xử lý khi một vùng được chọn
-			// selectStart: function(start, end, jsEvent, view) {
-			// 	// start: Thời gian bắt đầu của vùng được chọn
-			// 	// end: Thời gian kết thúc của vùng được chọn
-			// 	// jsEvent: Sự kiện JavaScript liên quan đến việc chọn
-			// 	// view: Đối tượng view hiện tại của lịch trình
-		
-			// 	// Hiển thị thông tin thời gian bắt đầu và kết thúc
-			// 	$('#startTime').text(start.format('HH:mm'));
-			// 	$('#endTime').text(end.format('HH:mm'));
-			// },
 			themeSystem: "bootstrap4",
 			defaultView: "agendaWeek",
 			editable: true,
