@@ -20,8 +20,7 @@ return new class extends Migration
             $table->string('Lop');
             $table->string('NhomMH');
             $table->integer('SiSo');
-            $table->string('TuanHoc');
-            $table->string('TietHoc');
+            $table->string('NgayHoc');
             $table->string('status');
             $table->timestamps();
 

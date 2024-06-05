@@ -3,6 +3,8 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CrawlerController;
+use App\Http\Controllers\DangKyController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OutPageController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\RoomController;
@@ -68,3 +70,17 @@ Route::post('/taotaikhoanhethong', [AccountController::class, 'createAccountAdmi
 Route::post('/suataikhoanhethong', [AccountController::class, 'updateAccountAdmin'])->name('update-account-admin')->middleware('admin');
 // Route cho việc xóa tài khoản
 Route::post('/xoataikhoanadmin', [AccountController::class, 'deleteAccountAdmin'])->name('delete-account-admin')->middleware('admin');
+
+//Route cho việc đăng ký thời khóa biểu
+Route::post('/dang-ky-thoi-khoa-bieu', [DangKyController::class, 'dangKy'])->name('dang-ky-thoi-khoa-bieu')->middleware('auth');
+//Route lấy danh sách thời khóa biểu đăng ký
+Route::get('/duyetTKB', [DangKyController::class, 'index'])->name('danh-sach-dang-ky-tkb')->middleware('admin');
+//Route duyệt thời khóa biểu
+Route::post('/duyet-thoi-khoa-bieu-dang-ky', [DangKyController::class, 'duyet'])->name('approve-tkb-admin')->middleware('admin');
+//Route từ chối duyệt thời khóa biểu
+Route::post('/tu-choi-duyet-thoi-khoa-bieu-dang-ky', [DangKyController::class, 'reject'])->name('reject-tkb-admin')->middleware('admin');
+
+//Xác nhận đã đọc thông báo
+Route::get('/notifications/read/{id}', [NotificationController::class, 'markNotificationAsRead'])->name('notifications.read')->middleware('auth');
+// Xóa tất cả thông báo
+Route::get('/notifications/delete-all', [NotificationController::class, 'deleteAll'])->name('notifications.deleteAll')->middleware('auth');

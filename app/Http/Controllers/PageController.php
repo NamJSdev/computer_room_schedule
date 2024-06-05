@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\HocKy;
+use App\Models\Notification;
 use App\Models\PhongMay;
+use App\Models\TietHoc;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -12,8 +14,9 @@ class PageController extends Controller
     {
         $hocKys = HocKy::all();
         $phongMays = PhongMay::all();
+        $tietHocs = TietHoc::all();
 
-        return view("pages.index",compact('hocKys', 'phongMays'));
+        return view("pages.index",compact('hocKys', 'phongMays','tietHocs'));
     }
     public function roomPage()
     {

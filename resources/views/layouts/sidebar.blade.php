@@ -59,7 +59,9 @@
             <i class="fas fa-fw fa-table"></i>
             <span>Duyệt TKB</span>
             <!-- Counter - Alerts -->
-            <span class="badge badge-danger badge-counter badge-sidebar">3+</span>
+            @if($countPendingThoiKhoaBieu > 0)
+                <span class="badge badge-danger badge-counter">{{ $countPendingThoiKhoaBieu }}+</span>
+            @endif
         </a>
     </li>
     <!-- Nav Item - Pages Collapse Menu -->
