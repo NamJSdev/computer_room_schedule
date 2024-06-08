@@ -6,16 +6,17 @@
 <div class="card mb-3" style="width: 100%; border-radius: 5px">
     <div class="card-body">
         <form id="filter-form">
+            @csrf
             <div class="form-row">
                 <div class="col">
-                    <select id="hoc-ky" class="form-control">
+                    <select id="hoc-ky" name="HocKy" class="form-control">
                         @foreach($hocKys as $hocKy)
                             <option value="{{ $hocKy->id }}">{{ $hocKy->TenHK }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="col">
-                    <select id="phong-may" class="form-control">
+                    <select id="phong-may" name="PhongMay" class="form-control">
                         @foreach($phongMays as $phongMay)
                             <option value="{{ $phongMay->id }}">{{ $phongMay->TenPhong }}</option>
                         @endforeach
@@ -44,10 +45,51 @@
             <div class="modal-content"> 
                 <div class="modal-body">
                     <h4 class="h4">
-                        <span class="event-icon weight-400 mr-3"></span
-                        ><span class="event-title"></span>
+                        <span class="event-icon weight-200 mr-3"></span
+                        ><span class="">Chi tiết</span>
                     </h4>
-                    <div class="event-body"></div>
+                    <table class="table">
+                        <thead>
+                          <tr>
+                                <th></th>
+                                <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="table-active">
+                                <td>Phòng máy:</td>
+                                <td class="roomAdd"></td>
+                            </tr>
+                            <tr>
+                                <td>Mã môn học:</td>
+                                <td class="maMonHocAdd"></td>
+                            </tr>
+                            <tr class="table-active">
+                                <td>Tên môn học:</td>
+                                <td class="tenMonHocAdd"></td>
+                            </tr>
+                            <tr class="">
+                                <td>Lớp:</td>
+                                <td class="classAdd"></td>
+                            </tr>
+                            <tr class="table-active">
+                                <td>Nhóm môn học:</td>
+                                <td class="nhomMHAdd"></td>
+                            </tr>
+                            <tr>
+                                <td>Tiết học:</td>
+                                <td class="tietHocAdd"></td>
+                            </tr>
+                            <tr class="table-active">
+                                <td>Sĩ số:</td>
+                                <td class="siSoAdd"></td>
+                            </tr>
+                            <tr>
+                                <td>Giảng viên:</td>
+                                <td class="giangVienAdd"></td>
+                            </tr>
+                        </tbody>
+                      </table>
                 </div>
                 <div class="modal-footer">
                     <button

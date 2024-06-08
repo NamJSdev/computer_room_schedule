@@ -18,10 +18,14 @@ class DangKyController extends Controller
         $dangKyLopHocs = DangKyLopHoc::with('thoiKhoaBieu.phongMay', 'thoiKhoaBieu.tietHocs')->where('Status', 'pending')->orderBy('id', 'desc')->get();
         return view('pages.duyet-tkb', ['dangKyLopHocs' => $dangKyLopHocs]); // Truyền dữ liệu tới view
     }
-    public function dangKy(Request $request)
+    public function getListForGV()
     {
 
-        // dd(auth()->user()->id);
+        $dangKyLopHocs = DangKyLopHoc::with('thoiKhoaBieu.phongMay', 'thoiKhoaBieu.tietHocs')->orderBy('id', 'desc')->get();
+        return view('pages.list-tkb-gv', ['dangKyLopHocs' => $dangKyLopHocs]); // Truyền dữ liệu tới view
+    }
+    public function dangKy(Request $request)
+    {
         // Validate input
         $request->validate([
             'TenMonHoc' => 'required|string|max:255',
@@ -46,6 +50,7 @@ class DangKyController extends Controller
         $thoiKhoaBieu->PhongMayID = $request->PhongMay;
         $thoiKhoaBieu->HocKyID = $request->HocKy;
         $thoiKhoaBieu->NgayHoc = $request->NgayDangKy;
+        $thoiKhoaBieu->GiangVien = $request->GiangVien;
         $thoiKhoaBieu->status = 'pending'; // Trạng thái mặc định là pending
         $thoiKhoaBieu->save();
 
@@ -100,7 +105,7 @@ class DangKyController extends Controller
         $thoiKhoaBieu = ThoiKhoaBieu::where('id', $dangKyLopHoc->ThoiKhoaBieuID)->first();
         $thoiKhoaBieu->status = 'rejected'; // Đặt trạng thái là từ chối
         $thoiKhoaBieu->save();
-        
+
         // Tạo thông báo sau khi từ chối
         $this->createNotification($dangKyLopHoc->TaiKhoanID, 'Thời khóa biểu của bạn đã bị từ chối. Vui lòng kiểm tra lại!');
 
@@ -113,4 +118,28 @@ class DangKyController extends Controller
             'message' => $message,
         ]);
     }
+
+    public function delete(Request $request)
+    {
+        $id = $request->id;
+        $dangKyLopHoc = DangKyLopHoc::find($id);
+    
+        if ($dangKyLopHoc) {
+            if ($dangKyLopHoc->Status === 'pending' || $dangKyLopHoc->Status === 'rejected') {
+                // Xóa các mục liên quan trong bảng tiet_hoc_va_thoi_khoa_bieu
+                DB::table('tiet_hoc_va_thoi_khoa_bieu')->where('ThoiKhoaBieuID', $dangKyLopHoc->ThoiKhoaBieuID)->delete();
+    
+                // Xóa ThoiKhoaBieu tương ứng
+                ThoiKhoaBieu::where('id', $dangKyLopHoc->ThoiKhoaBieuID)->delete();
+            }
+    
+            // Xóa mục DangKyLopHoc
+            $dangKyLopHoc->delete();
+    
+            return redirect()->route('danh-sach-tkb-giangvien')->with('success', 'Đã từ chối duyệt thời khóa biểu thành công.');
+        }
+    
+        return response()->json(['success' => false, 'message' => 'Không tìm thấy đăng ký.']);
+    }
+    
 }

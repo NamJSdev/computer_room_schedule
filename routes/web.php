@@ -11,6 +11,7 @@ use App\Http\Controllers\RoomController;
 use App\Http\Controllers\ScrapeController;
 use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\TietHocController;
+use App\Http\Controllers\TimeTableController;
 use Illuminate\Support\Facades\Route;
 
 //Craw
@@ -84,3 +85,10 @@ Route::post('/tu-choi-duyet-thoi-khoa-bieu-dang-ky', [DangKyController::class, '
 Route::get('/notifications/read/{id}', [NotificationController::class, 'markNotificationAsRead'])->name('notifications.read')->middleware('auth');
 // Xóa tất cả thông báo
 Route::get('/notifications/delete-all', [NotificationController::class, 'deleteAll'])->name('notifications.deleteAll')->middleware('auth');
+
+//Route lấy danh sách đăng ký thời khóa biểu của giảng viên
+Route::get('/thoiKhoaBieuDangKy', [DangKyController::class, 'getListForGV'])->name('danh-sach-tkb-giangvien')->middleware('giangvien');
+Route::post('/xoaThoiKhoaBieuDangKy', [DangKyController::class, 'delete'])->name('xoa-dang-ky-tkb-giangvien')->middleware('giangvien');
+
+// Lấy dữ liệu thời khóa biểu
+Route::post('/get-timetable', [TimeTableController::class, 'getTimetable'])->name('get-timetable');
