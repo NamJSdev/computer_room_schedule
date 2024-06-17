@@ -90,11 +90,11 @@ Route::get('/notifications/read/{id}', [NotificationController::class, 'markNoti
 Route::get('/notifications/delete-all', [NotificationController::class, 'deleteAll'])->name('notifications.deleteAll')->middleware('auth');
 
 //Route lấy danh sách đăng ký thời khóa biểu của giảng viên
-Route::get('/thoiKhoaBieuDangKy', [DangKyController::class, 'getListForGV'])->name('danh-sach-tkb-giangvien')->middleware('giangvien');
-Route::post('/xoaThoiKhoaBieuDangKy', [DangKyController::class, 'delete'])->name('xoa-dang-ky-tkb-giangvien')->middleware('giangvien');
+Route::get('/thoiKhoaBieuDangKy', [DangKyController::class, 'getListForGV'])->name('danh-sach-tkb-giangvien')->middleware('auth');
+Route::post('/xoaThoiKhoaBieuDangKy', [DangKyController::class, 'delete'])->name('xoa-dang-ky-tkb-giangvien')->middleware('auth');
 
 //Route lấy danh sách đăng ký thời khóa biểu cho admin
-Route::get('/listTKBDK', [DangKyController::class, 'getListForAdmin'])->name('ds-tkb-dang-ky-tk')->middleware('admin');
+Route::get('/listTKBDK', [DangKyController::class, 'getListForAdmin'])->name('ds-tkb-dang-ky-tk')->middleware('auth');
 Route::post('/xoaThoiKhoaBieuDangKyForAdmin', [DangKyController::class, 'deleteForAdmin'])->name('xoa-dang-ky-tkb-for-admin')->middleware('auth');
 
 // Lấy dữ liệu thời khóa biểu
