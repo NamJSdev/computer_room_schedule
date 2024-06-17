@@ -19,8 +19,7 @@ class ThoiKhoaBieu extends Model
         'Lop',
         'NhomMH',
         'SiSo',
-        'TuanHoc',
-        'TietHoc',
+        'NgayHoc',
         'status',
     ];
 
@@ -37,5 +36,9 @@ class ThoiKhoaBieu extends Model
     public function dangKyLopHocs()
     {
         return $this->hasMany(DangKyLopHoc::class, 'ThoiKhoaBieuID');
+    }
+    public function tietHocs()
+    {
+        return $this->belongsToMany(TietHoc::class, 'tiet_hoc_va_thoi_khoa_bieu', 'ThoiKhoaBieuID', 'TietHocID');
     }
 }

@@ -35,18 +35,20 @@
     <!-- Bootstrap core JavaScript-->
     <script src="{{asset('js/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('js/bootstap/bootstrap.bundle.min.js')}}"></script>
+    <!-- Bootstrap Select JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="{{asset('js/main/core.js')}}"></script>
-    <script src="{{asset('js/jquery-easing/jquery.easing.min.js')}}"></script>
+    {{-- <script src="{{asset('js/jquery-easing/jquery.easing.min.js')}}"></script> --}}
     <script src="{{asset('js/fullcalendar/fullcalendar.min.js')}}"></script>
     <script src="{{asset('js/main/calendar-setting.js')}}"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="{{asset('js/main/sb-admin-2.min.js')}}"></script>
     <script src="{{asset('js/main/main.js')}}"></script>  
-    <script src="{{asset('js/scrape.js')}}"></script>
+    {{-- <script src="{{asset('js/scrape.js')}}"></script> --}}
 </body>
 
 </html>
