@@ -154,6 +154,7 @@ return [
     | this array to grant expanded functionality to your applications.
     |
     */
+    
 
     'providers' => ServiceProvider::defaultProviders()->merge([
         /*
@@ -168,6 +169,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Laravel\Dusk\DuskServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -184,5 +186,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
+
+    
 
 ];

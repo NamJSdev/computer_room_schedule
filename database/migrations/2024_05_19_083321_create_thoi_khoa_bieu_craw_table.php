@@ -15,11 +15,12 @@ class CreateThoiKhoaBieuCrawTable extends Migration
             $table->string('TenMonHoc');
             $table->string('MaMonHoc');
             $table->string('Lop');
+            $table->string('Thu');
             $table->string('NhomMH');
-            $table->integer('SiSo');
+            $table->string('SoTinChi');
             $table->string('TuanHoc');
             $table->string('TietHoc');
-            $table->string('status');
+            $table->string('status')->default('pending');
             $table->timestamps();
 
             $table->foreign('PhongMayID')->references('id')->on('phong_mays')->onDelete('cascade');

@@ -1,16 +1,34 @@
 {
-    "private": true,
-    "type": "module",
-    "scripts": {
-        "dev": "vite",
-        "build": "vite build"
-    },
-    "devDependencies": {
-        "axios": "^1.6.4",
-        "laravel-vite-plugin": "^1.0.0",
-        "vite": "^5.0.0"
-    },
-    "dependencies": {
-        "puppeteer": "^22.10.0"
-    }
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "axios": "^1.6.4",
+    "laravel-vite-plugin": "^1.0.0",
+    "vite": "^5.0.0"
+  },
+  "dependencies": {
+    "puppeteer": "^22.10.0"
+  },
+  "name": "vnua_timetable",
+  "description": "",
+  "version": "1.0.0",
+  "main": "vite.config.js",
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NamJSdev/vnua_timetable.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NamJSdev/vnua_timetable/issues"
+  },
+  "homepage": "https://github.com/NamJSdev/vnua_timetable#readme"
 }

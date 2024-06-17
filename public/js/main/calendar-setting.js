@@ -59,8 +59,52 @@ jQuery(document).ready(function () {
                 console.log(response); // Log dữ liệu trả về từ server
                 // Xử lý dữ liệu và hiển thị trên trang web
                 $('#calendar').fullCalendar('removeEvents');
-                // Thêm các sự kiện mới từ dữ liệu nhận được
                 $('#calendar').fullCalendar('addEventSource', response);
+
+                // Gửi request Ajax đến route '/get-crawled-data'
+                $.ajax({
+                    type: 'POST',
+                    url: '/get-timetable-crawled',
+                    data: formData,
+                    success: function (crawledData) {
+                        console.log(crawledData);
+                        $('#calendar').fullCalendar('addEventSource', crawledData);
+                        // Khai báo biến để lưu trữ allDayText
+                        //  console.log(crawledData.weeks);
+                        var currentWeekText = '';
+
+                        // Cập nhật allDayText khi di chuyển giữa các tuần trên lịch
+                        $('#calendar').fullCalendar('option', 'viewRender', function (view, element) {
+                            var currentWeekStart = view.intervalStart.format('YYYY-MM-DD');
+                            var currentWeekEnd = view.intervalEnd.format('YYYY-MM-DD');
+                            
+                            currentWeekText = ''; // Khởi tạo biến để lưu trữ thông tin về tuần hiện tại
+
+                            // Tìm và cập nhật allDayText tương ứng với tuần hiện tại
+                            $.each(crawledData.weeks, function (index, week) {
+                                var startDate = week.start_date.trim();
+                                var endDate = week.end_date.trim();
+
+                                // In kiểm tra điều kiện so sánh
+                                if (startDate === currentWeekStart || endDate === currentWeekEnd) {
+                                    currentWeekText = 'Tuần ' + (index); // Vị trí index + 1 tương ứng với số thứ tự tuần
+                                    return false; // Dừng vòng lặp khi tìm được tuần hiện tại
+                                } else {
+                                    console.log("No match for week: ", index);
+                                }
+                            });
+
+                            if (currentWeekText) {
+                                $('.fc-currentWeekButton-button').text(currentWeekText).show();
+                            } else {
+                                $('.fc-currentWeekButton-button').hide();
+                            }
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error); // Log lỗi nếu có
+                    }
+                });
             },
             error: function (xhr, status, error) {
                 console.error(error); // Log lỗi nếu có
@@ -94,12 +138,17 @@ jQuery(document).ready(function () {
         buttonText: {
             today: "Hôm Nay",
         },
-        allDayText: "Tuần 21",
+        allDayText: "H",
         displayEventTime: false,
         header: {
             left: "today",
             center: "title",
-            right: "prev,next",
+            right: "currentWeekButton prev,next",
+        },
+        customButtons: {
+            currentWeekButton: {
+                text: 'Tuần',
+            }
         },
         dayClick: function (date, jsEvent, view) {
             // Lưu ngày được chọn vào input ẩn
