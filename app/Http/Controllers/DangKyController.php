@@ -21,13 +21,16 @@ class DangKyController extends Controller
     public function getListForGV()
     {
 
-        $dangKyLopHocs = DangKyLopHoc::with('thoiKhoaBieu.phongMay', 'thoiKhoaBieu.tietHocs')->orderBy('id', 'desc')->get();
+        // Lấy ID người dùng đang đăng nhập
+        $taiKhoanId = Auth::id();
+
+        $dangKyLopHocs = DangKyLopHoc::with('thoiKhoaBieu.phongMay', 'thoiKhoaBieu.tietHocs')->where('TaiKhoanID', $taiKhoanId)->orderBy('id', 'desc')->get();
         return view('pages.list-tkb-gv', ['dangKyLopHocs' => $dangKyLopHocs]); // Truyền dữ liệu tới view
     }
     public function getListForAdmin()
     {
 
-        $dangKyLopHocs = DangKyLopHoc::with('thoiKhoaBieu.phongMay', 'thoiKhoaBieu.tietHocs')->where('Status','approved')->orderBy('id', 'desc')->get();
+        $dangKyLopHocs = DangKyLopHoc::with('thoiKhoaBieu.phongMay', 'thoiKhoaBieu.tietHocs')->where('Status', 'approved')->orderBy('id', 'desc')->get();
         return view('pages.list-tkb-admin', ['dangKyLopHocs' => $dangKyLopHocs]); // Truyền dữ liệu tới view
     }
     public function dangKy(Request $request)
@@ -42,7 +45,7 @@ class DangKyController extends Controller
             'TietHoc' => 'required|array',
             'GiangVien' => 'required|string|max:255',
         ]);
-        
+
         // Tạo mới thời khóa biểu
         $thoiKhoaBieu = new ThoiKhoaBieu();
         $thoiKhoaBieu->PhongMayID = 1; // Thay thế bằng ID phòng máy tương ứng
@@ -128,45 +131,44 @@ class DangKyController extends Controller
     {
         $id = $request->id;
         $dangKyLopHoc = DangKyLopHoc::find($id);
-    
+
         if ($dangKyLopHoc) {
             if ($dangKyLopHoc->Status === 'pending' || $dangKyLopHoc->Status === 'rejected' || $dangKyLopHoc->Status === 'approved') {
                 // Xóa các mục liên quan trong bảng tiet_hoc_va_thoi_khoa_bieu
                 DB::table('tiet_hoc_va_thoi_khoa_bieu')->where('ThoiKhoaBieuID', $dangKyLopHoc->ThoiKhoaBieuID)->delete();
-    
+
                 // Xóa ThoiKhoaBieu tương ứng
                 ThoiKhoaBieu::where('id', $dangKyLopHoc->ThoiKhoaBieuID)->delete();
             }
-    
+
             // Xóa mục DangKyLopHoc
             $dangKyLopHoc->delete();
-    
+
             return redirect()->route('danh-sach-tkb-giangvien')->with('success', 'Đã từ xóa đăng ký thành công.');
         }
-    
+
         return response()->json(['success' => false, 'message' => 'Không tìm thấy đăng ký.']);
     }
     public function deleteForAdmin(Request $request)
     {
         $id = $request->id;
         $dangKyLopHoc = DangKyLopHoc::find($id);
-    
+
         if ($dangKyLopHoc) {
             if ($dangKyLopHoc->Status === 'approved') {
                 // Xóa các mục liên quan trong bảng tiet_hoc_va_thoi_khoa_bieu
                 DB::table('tiet_hoc_va_thoi_khoa_bieu')->where('ThoiKhoaBieuID', $dangKyLopHoc->ThoiKhoaBieuID)->delete();
-    
+
                 // Xóa ThoiKhoaBieu tương ứng
                 ThoiKhoaBieu::where('id', $dangKyLopHoc->ThoiKhoaBieuID)->delete();
             }
-    
+
             // Xóa mục DangKyLopHoc
             $dangKyLopHoc->delete();
-    
+
             return redirect()->route('danh-sach-tkb-giangvien')->with('success', 'Đã xóa thời khóa biểu thành công.');
         }
-    
+
         return response()->json(['success' => false, 'message' => 'Không tìm thấy đăng ký.']);
     }
-    
 }
